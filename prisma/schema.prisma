@@ -8,9 +8,9 @@ datasource db {
 }
 
 model TelegramUser {
-  id                    Int                     @id
+  id                    String                  @id
   address               String?                 @unique
-  feeRate               Int                     @default(5)
+  feeRate               Int                     @default(500)
   winAmount             Int                     @default(0)
   winCount              Int                     @default(0)
   WorldcoinVerification WorldcoinVerification[]
@@ -18,7 +18,7 @@ model TelegramUser {
 
 model WorldcoinVerification {
   id         Int          @id @default(autoincrement())
-  userId     Int
+  userId     String
   isVerified Boolean      @default(false)
   requestId  String       @unique
   status     String

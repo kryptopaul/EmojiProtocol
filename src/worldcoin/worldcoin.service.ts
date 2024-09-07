@@ -118,7 +118,7 @@ export class WorldcoinService {
           id: verification.userId,
         },
         data: {
-          feeRate: 2.5,
+          feeRate: 250,
         },
       });
 

@@ -47,13 +47,14 @@ export class BotService {
     this.bot.onText(/\/wallet (.+)/, this.handleWalletCommand.bind(this));
     this.bot.onText(/\/verify/, this.handleWorldcoinVerify.bind(this));
     this.bot.onText(/\/leaderboard/, this.handleLeaderboard.bind(this));
+    this.bot.onText(/\/pool/, this.handlePool.bind(this));
   }
 
   async handleMessage(msg: TelegramBot.Message) {
     if (msg.dice) {
       const isRegistered = await prisma.telegramUser.findFirst({
         where: {
-          id: msg.from.id,
+          id: msg.from.id.toString(),
         },
       });
 
@@ -79,14 +80,22 @@ export class BotService {
         parse_mode: 'Markdown', // Enable Markdown for username mention
       },
     );
-    // setTimeout(async () => {
-    //   await this.bot.deleteMessage(
-    //     registerMessage.chat.id,
-    //     registerMessage.message_id,
-    //   );
-    // }, 5000);
+    setTimeout(async () => {
+      await this.bot.deleteMessage(
+        registerMessage.chat.id,
+        registerMessage.message_id,
+      );
+    }, 5000);
 
-    // await this.bot.deleteMessage(msg.chat.id, msg.message_id);
+    await this.bot.deleteMessage(msg.chat.id, msg.message_id);
+  }
+  async handlePool(msg: TelegramBot.Message) {
+    const poolAddress = this.blockchainService.l2Contract;
+    const poolBalance = await this.blockchainService.getPoolBalance();
+    await this.bot.sendMessage(
+      msg.chat.id,
+      `Pool Address (MOG on Base): ${poolAddress}\n\nPool Balance: ${poolBalance} MOG`,
+    );
   }
 
   async handleWalletCommand(
@@ -127,10 +136,10 @@ export class BotService {
       }
       await prisma.telegramUser.upsert({
         where: {
-          id: msg.from.id,
+          id: msg.from.id.toString(),
         },
         create: {
-          id: msg.from.id,
+          id: msg.from.id.toString(),
           address: addressToUpsert,
         },
         update: {
@@ -159,7 +168,7 @@ export class BotService {
     console.log('handleWorldcoinVerify');
     const isKYC = await prisma.worldcoinVerification.findFirst({
       where: {
-        userId: msg.from.id,
+        userId: msg.from.id.toString(),
         status: 'SUCCESS',
       },
     });
@@ -176,7 +185,7 @@ export class BotService {
     await prisma.worldcoinVerification.create({
       data: {
         user: {
-          connect: { id: msg.from.id },
+          connect: { id: msg.from.id.toString() },
         },
         status: 'PENDING',
         isVerified: false,
@@ -189,20 +198,29 @@ export class BotService {
   }
 
   async handleWin(msg: TelegramBot.Message) {
-    await this.bot.sendMessage(msg.chat.id, 'hugo win', {
-      reply_to_message_id: msg.message_id,
+    const user = await prisma.telegramUser.findFirstOrThrow({
+      where: {
+        id: msg.from.id.toString(),
+      },
     });
+
+    const address = user.address as `0x${string}`;
+    const feeRate = user.feeRate;
+
+    const hash = await this.blockchainService.processWin(address, feeRate);
+
+    await this.bot.sendAnimation(
+      msg.chat.id,
+      'https://i.imgur.com/e79Dq18.gif',
+      {
+        reply_to_message_id: msg.message_id,
+        caption: `We got a winner! 😹😹😹\n\nTransaction: https://basescan.org/tx/${hash}`,
+        parse_mode: 'Markdown',
+      },
+    );
     console.log(`${msg.from.first_name} spinned ${msg.dice.value} and won.`);
   }
   async handleLost(msg: TelegramBot.Message) {
-    await this.bot.sendAnimation(
-      msg.chat.id,
-      'https://media1.tenor.com/m/4OYd5OlYR9wAAAAd/gamba-xqc.gif',
-      {
-        reply_to_message_id: msg.message_id,
-        caption: 'Congratulations! 🎉🥳',
-      },
-    );
     console.log(`${msg.from.first_name} spinned ${msg.dice.value} and lost.`);
   }
 
@@ -219,7 +237,10 @@ export class BotService {
     let index = 0;
     for (const user of leaderboard) {
       index++;
-      const username = await this.bot.getChatMember(msg.chat.id, user.id);
+      const username = await this.bot.getChatMember(
+        msg.chat.id,
+        Number(user.id),
+      );
       leaderboardMessage += `${index}. ${username.user.first_name} - ${user.winAmount} MOG`;
       leaderboardMessage += '\n';
     }
