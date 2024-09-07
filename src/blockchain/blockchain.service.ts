@@ -42,6 +42,21 @@ export class BlockchainService {
   }
 
   async processWin(address: `0x${string}`) {
+    const balance = Number(await this.getPoolBalance());
+    await prisma.telegramUser.update({
+      where: {
+        address: address,
+      },
+      data: {
+        winAmount: {
+          increment: balance,
+        },
+        winCount: {
+          increment: 1,
+        },
+      },
+    });
+
     const { request } = await this.baseClient.simulateContract({
       account: this.account,
       address: this.l2Contract,

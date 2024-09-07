@@ -38,10 +38,15 @@ export class BotService {
         command: 'pool',
         description: 'Return the pool address and current balance.',
       },
+      {
+        command: 'leaderboard',
+        description: 'Return the top winners.',
+      },
     ]);
 
     this.bot.onText(/\/wallet (.+)/, this.handleWalletCommand.bind(this));
     this.bot.onText(/\/verify/, this.handleWorldcoinVerify.bind(this));
+    this.bot.onText(/\/leaderboard/, this.handleLeaderboard.bind(this));
   }
 
   async handleMessage(msg: TelegramBot.Message) {
@@ -199,5 +204,37 @@ export class BotService {
       },
     );
     console.log(`${msg.from.first_name} spinned ${msg.dice.value} and lost.`);
+  }
+
+  async handleLeaderboard(msg: TelegramBot.Message) {
+    const leaderboard = await this.getLeaderboard();
+    if (!leaderboard.length) {
+      await this.bot.sendMessage(msg.chat.id, 'Nobody wants to be rich?', {
+        reply_to_message_id: msg.message_id,
+      });
+      return;
+    }
+
+    let leaderboardMessage = '';
+    let index = 0;
+    for (const user of leaderboard) {
+      index++;
+      const username = await this.bot.getChatMember(msg.chat.id, user.id);
+      leaderboardMessage += `${index}. ${username.user.first_name} - ${user.winAmount} MOG`;
+      leaderboardMessage += '\n';
+    }
+
+    await this.bot.sendMessage(msg.chat.id, leaderboardMessage, {
+      reply_to_message_id: msg.message_id,
+    });
+  }
+
+  async getLeaderboard() {
+    return await prisma.telegramUser.findMany({
+      orderBy: {
+        winAmount: 'desc',
+      },
+      take: 15,
+    });
   }
 }

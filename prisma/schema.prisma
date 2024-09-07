@@ -9,16 +9,18 @@ datasource db {
 
 model TelegramUser {
   id                    Int                     @id
-  address               String?
+  address               String?                 @unique
   feeRate               Int                     @default(5)
+  winAmount             Int                     @default(0)
+  winCount              Int                     @default(0)
   WorldcoinVerification WorldcoinVerification[]
 }
 
 model WorldcoinVerification {
-  id         Int           @id @default(autoincrement()) // Set id to auto-increment
-  user       TelegramUser? @relation(fields: [userId], references: [id])
+  id         Int          @id @default(autoincrement())
   userId     Int
-  isVerified Boolean       @default(false)
-  requestId  String        @unique
+  isVerified Boolean      @default(false)
+  requestId  String       @unique
   status     String
+  user       TelegramUser @relation(fields: [userId], references: [id])
 }
