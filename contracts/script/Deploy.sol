@@ -29,7 +29,6 @@ contract Deploy is Script, CreateXScript {
         // // base
         // emojiProtocol.initialize(
         //     0x2626664c2603336E57B271c5C0b26F421741e481,
-        //     0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a,
         //     0x2Da56AcB9Ea78330f947bD57C54119Debda7AF71,
         //     0x4200000000000000000000000000000000000006
         // );
@@ -38,7 +37,6 @@ contract Deploy is Script, CreateXScript {
         // emojiProtocol.initialize(
         //     0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45,
         //     0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a,
-        //     0x2Da56AcB9Ea78330f947bD57C54119Debda7AF71,
         //     0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
         // );
 

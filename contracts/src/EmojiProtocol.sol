@@ -36,49 +36,27 @@ interface IWETH {
     function approve(address, uint256) external returns (bool);
 }
 
-interface IL1StandardBridge {
-    function depositERC20To(
-        address _l1Token,
-        address _l2Token,
-        address _to,
-        uint256 _amount,
-        uint32 _minGasLimit,
-        bytes calldata _extraData
-    ) external;
-}
-
 error NotEthereum();
 error NotBase();
 error NoMoney();
 error Unauthorized();
-error NotOnEthereum();
-error InsufficientMogBalance();
 
 contract EmojiProtocol is Ownable {
-    ICrossDomainMessenger public MESSENGER;
-    IL1StandardBridge public L1_BRIDGE;
+    ICrossDomainMessenger MESSENGER;
     uint32 public bridgeGasLimit = 2000000;
 
     ISwapRouter public swapRouter;
     IERC20 public MOG_COIN;
-    IERC20 public L2_MOG_COIN;
     IWETH public WETH;
 
     constructor() {
         _initializeOwner(0x644C1564d1d19Cf336417734170F21B944109074);
         MESSENGER = ICrossDomainMessenger(0x866E82a600A1414e583f7F13623F1aC5d58b0Afa);
-        L1_BRIDGE = IL1StandardBridge(0x3154Cf16ccdb4C6d922629664174b904d80F2C35); // Base L1 Bridge address
     }
 
-    function initialize(
-        address _swapRouter,
-        address _mogCoin,
-        address _l2MogCoin,
-        address _weth
-    ) external onlyOwner {
+    function initialize(address _swapRouter, address _mogCoin, address _weth) external onlyOwner{
         swapRouter = ISwapRouter(_swapRouter);
         MOG_COIN = IERC20(_mogCoin);
-        L2_MOG_COIN = IERC20(_l2MogCoin);
         WETH = IWETH(_weth);
     }
     
@@ -130,28 +108,6 @@ contract EmojiProtocol is Ownable {
         MOG_COIN.transfer(owner(), feeAmount);
     }
 
-   function bridgeMogToBase(uint256 _amount) external {
-        if (block.chainid != 1) {
-            revert NotOnEthereum();
-        }
-        
-        if (MOG_COIN.balanceOf(msg.sender) < _amount) {
-            revert InsufficientMogBalance();
-        }
-        
-        MOG_COIN.transferFrom(msg.sender, address(this), _amount);
-        MOG_COIN.approve(address(L1_BRIDGE), _amount);
-        
-        L1_BRIDGE.depositERC20To(
-            address(MOG_COIN),
-            address(L2_MOG_COIN),
-            address(this), 
-            _amount,
-            bridgeGasLimit,
-            ""
-        );
-    }
-    
     receive() external payable {
         if (block.chainid == 1) {
             bridgeAndSwapFromEthereum();
