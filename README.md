@@ -7,7 +7,7 @@ Tech used (& Bounties applied):
 - OP Stack Bridge (Bridging ETH from Mainnet to Base and swapping to Mog coin) - https://github.com/kryptopaul/EmojiProtocol/blob/main/contracts/src/EmojiProtocol.sol
 - Worldcoin - KYC for lower fees. From 5% to 2.5%. Generating a challenge that can be passed to the app, and awaiting a successful completion - https://github.com/kryptopaul/EmojiProtocol/blob/main/src/worldcoin/worldcoin.service.ts
 - Golem - used to generate a create2 salt. - https://github.com/kryptopaul/EmojiProtocol/blob/main/create2utils/index.ts
-- ENS - Resolving ENS names to addresses, when user is submitting their address. - https://github.com/kryptopaul/EmojiProtocol/blob/main/src/blockchain/blockchain.service.ts#L38
+- ENS - Resolving ENS names to addresses, when user is submitting their address. - https://github.com/kryptopaul/EmojiProtocol/blob/6681075e44a4020d86a58dd0cde0d4e89205cee3/src/bot/bot.service.ts#L154
 
 Contracts
 
