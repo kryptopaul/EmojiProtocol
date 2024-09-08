@@ -13,6 +13,7 @@ model TelegramUser {
   feeRate               Int                     @default(500)
   winAmount             Int                     @default(0)
   winCount              Int                     @default(0)
+  lastSpinTime          DateTime?  
   WorldcoinVerification WorldcoinVerification[]
 }
 

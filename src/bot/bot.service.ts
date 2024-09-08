@@ -52,16 +52,32 @@ export class BotService {
 
   async handleMessage(msg: TelegramBot.Message) {
     if (msg.dice) {
-      const isRegistered = await prisma.telegramUser.findFirst({
+      const user = await prisma.telegramUser.findFirst({
         where: {
           id: msg.from.id.toString(),
         },
       });
 
-      if (!isRegistered) {
+      if (!user) {
         await this.handleNoWalletRegistered(msg);
         return;
       }
+
+      if (!user.lastSpinTime) {
+      } else if (user.lastSpinTime > new Date(new Date().getTime() - 60000)) {
+        console.log(user.lastSpinTime)
+        console.log(new Date(new Date().getTime() - 6000))
+        await this.handleTimeout(msg);
+        return;
+      } 
+      await prisma.telegramUser.update({
+        where: {
+          id: msg.from.id.toString(),
+        },
+        data: {
+          lastSpinTime: new Date(),
+        },
+      });
 
       if (msg.dice.value === 64) {
         this.handleWin(msg);
@@ -70,6 +86,27 @@ export class BotService {
       }
     }
   }
+
+  async handleTimeout(msg: TelegramBot.Message) {
+    const registerMessage = await this.bot.sendMessage(
+      msg.chat.id,
+      `@${msg.from.username}, calm down, you can only spin once per minute.`,
+      {
+        reply_to_message_id: msg.message_id,
+        parse_mode: 'Markdown', // Enable Markdown for username mention
+      },
+    );
+    setTimeout(async () => {
+      await this.bot.deleteMessage(
+        registerMessage.chat.id,
+        registerMessage.message_id,
+      );
+    }, 5000);
+
+    await this.bot.deleteMessage(msg.chat.id, msg.message_id);
+  
+  }
+
 
   async handleNoWalletRegistered(msg: TelegramBot.Message) {
     const registerMessage = await this.bot.sendMessage(
