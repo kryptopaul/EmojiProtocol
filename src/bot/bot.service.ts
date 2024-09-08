@@ -52,6 +52,12 @@ export class BotService {
 
   async handleMessage(msg: TelegramBot.Message) {
     if (msg.dice) {
+      console.log(msg);
+      if (msg.forward_from) {
+        return await this.bot.sendMessage(msg.chat.id, 'nice try retard', {
+          reply_to_message_id: msg.message_id,
+        });
+      }
       const user = await prisma.telegramUser.findFirst({
         where: {
           id: msg.from.id.toString(),
@@ -65,11 +71,11 @@ export class BotService {
 
       if (!user.lastSpinTime) {
       } else if (user.lastSpinTime > new Date(new Date().getTime() - 60000)) {
-        console.log(user.lastSpinTime)
-        console.log(new Date(new Date().getTime() - 6000))
+        console.log(user.lastSpinTime);
+        console.log(new Date(new Date().getTime() - 6000));
         await this.handleTimeout(msg);
         return;
-      } 
+      }
       await prisma.telegramUser.update({
         where: {
           id: msg.from.id.toString(),
@@ -104,9 +110,7 @@ export class BotService {
     }, 5000);
 
     await this.bot.deleteMessage(msg.chat.id, msg.message_id);
-  
   }
-
 
   async handleNoWalletRegistered(msg: TelegramBot.Message) {
     const registerMessage = await this.bot.sendMessage(
