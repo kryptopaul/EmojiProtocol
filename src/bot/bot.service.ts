@@ -115,7 +115,7 @@ export class BotService {
   async handleNoWalletRegistered(msg: TelegramBot.Message) {
     const registerMessage = await this.bot.sendMessage(
       msg.chat.id,
-      `@${msg.from.username}, you have not registered. Use /wallet <address> to link your account to your wallet.`,
+      `@${msg.from.username}, you have not registered. Use /wallet <address> to link your account to your wallet\\.`,
       {
         reply_to_message_id: msg.message_id,
         parse_mode: 'MarkdownV2', // Enable Markdown for username mention
@@ -172,7 +172,7 @@ export class BotService {
       } else {
         await this.bot.sendMessage(
           msg.chat.id,
-          'Invalid wallet address. Please provide a valid Ethereum address or ENS name.',
+          'Invalid wallet address. Please provide a valid Ethereum address or ENS name\\.',
           {
             reply_to_message_id: msg.message_id,
             parse_mode: 'MarkdownV2',
@@ -222,7 +222,7 @@ export class BotService {
     });
     if (isKYC) {
       console.log('Kyc already');
-      await this.bot.sendMessage(msg.chat.id, 'You are already verified', {
+      await this.bot.sendMessage(msg.chat.id, 'You are already verified\\.', {
         reply_to_message_id: msg.message_id,
       });
       return;
@@ -262,7 +262,7 @@ export class BotService {
       'https://i.imgur.com/e79Dq18.gif',
       {
         reply_to_message_id: msg.message_id,
-        caption: `We got a winner! 😹😹😹\n\nTransaction: https://basescan.org/tx/${hash}`,
+        caption: `We got a winner! 😹😹😹\n\nTransaction: https://basescan.org/tx/${hash}\\.`,
         parse_mode: 'Markdown',
       },
     );
@@ -275,7 +275,7 @@ export class BotService {
   async handleLeaderboard(msg: TelegramBot.Message) {
     const leaderboard = await this.getLeaderboard();
     if (!leaderboard.length) {
-      await this.bot.sendMessage(msg.chat.id, 'Nobody wants to be rich?', {
+      await this.bot.sendMessage(msg.chat.id, 'Nobody wants to be rich\\?', {
         reply_to_message_id: msg.message_id,
       });
       return;
