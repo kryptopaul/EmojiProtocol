@@ -206,7 +206,7 @@ export class BotService {
         'Please provide a wallet address. Usage: /wallet <address>',
         {
           reply_to_message_id: msg.message_id,
-          parse_mode: 'HTML',
+          parse_mode: 'Markdown',
         },
       );
     }
