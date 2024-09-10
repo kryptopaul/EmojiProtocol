@@ -115,7 +115,7 @@ export class BotService {
   async handleNoWalletRegistered(msg: TelegramBot.Message) {
     const registerMessage = await this.bot.sendMessage(
       msg.chat.id,
-      `@${msg.from.username}, you have not registered. Use /wallet <address> to link your account to your wallet\\.`,
+      `@${msg.from.username}, you have not registered\\. Use /wallet <address> to link your account to your wallet\\.`,
       {
         reply_to_message_id: msg.message_id,
         parse_mode: 'MarkdownV2', // Enable Markdown for username mention
@@ -262,7 +262,7 @@ export class BotService {
       'https://i.imgur.com/e79Dq18.gif',
       {
         reply_to_message_id: msg.message_id,
-        caption: `We got a winner! 😹😹😹\n\nTransaction: https://basescan.org/tx/${hash}\\.`,
+        caption: `We got a winner\\! 😹😹😹\\n\\nTransaction: https://basescan.org/tx/${hash}\\.`,
         parse_mode: 'Markdown',
       },
     );
