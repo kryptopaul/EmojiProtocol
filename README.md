@@ -22,3 +22,7 @@ Authors:
 - Fraanek
 - Verzo
 - Lidka
+
+Address for prizes:
+
+0x60D4496FfaeF491e6BE88D55dcB511F513390486
