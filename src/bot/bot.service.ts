@@ -99,7 +99,7 @@ export class BotService {
       `@${msg.from.username}, calm down, you can only spin once per minute.`,
       {
         reply_to_message_id: msg.message_id,
-        parse_mode: 'Markdown', // Enable Markdown for username mention
+        parse_mode: 'MarkdownV2', // Enable Markdown for username mention
       },
     );
     setTimeout(async () => {
@@ -118,7 +118,7 @@ export class BotService {
       `@${msg.from.username}, you have not registered. Use /wallet <address> to link your account to your wallet.`,
       {
         reply_to_message_id: msg.message_id,
-        parse_mode: 'Markdown', // Enable Markdown for username mention
+        parse_mode: 'MarkdownV2', // Enable Markdown for username mention
       },
     );
     setTimeout(async () => {
@@ -136,6 +136,9 @@ export class BotService {
     await this.bot.sendMessage(
       msg.chat.id,
       `Pool Address (MOG on Base): ${poolAddress}\n\nPool Balance: ${poolBalance} MOG`,
+      {
+        parse_mode: 'MarkdownV2',
+      },
     );
   }
 
@@ -161,6 +164,7 @@ export class BotService {
             'Invalid wallet address. ENS resolution failed.',
             {
               reply_to_message_id: msg.message_id,
+              parse_mode: 'MarkdownV2',
             },
           );
           return;
@@ -171,6 +175,7 @@ export class BotService {
           'Invalid wallet address. Please provide a valid Ethereum address or ENS name.',
           {
             reply_to_message_id: msg.message_id,
+            parse_mode: 'MarkdownV2',
           },
         );
         return;
@@ -192,6 +197,7 @@ export class BotService {
         `Wallet address set to: ${addressToUpsert}`,
         {
           reply_to_message_id: msg.message_id,
+          parse_mode: 'MarkdownV2',
         },
       );
     } else {
@@ -200,6 +206,7 @@ export class BotService {
         'Please provide a wallet address. Usage: /wallet <address>',
         {
           reply_to_message_id: msg.message_id,
+          parse_mode: 'MarkdownV2',
         },
       );
     }
