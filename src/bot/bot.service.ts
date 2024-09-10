@@ -99,7 +99,7 @@ export class BotService {
       `@${msg.from.username}, calm down, you can only spin once per minute\\.`, // Escaped the period character
       {
         reply_to_message_id: msg.message_id,
-        parse_mode: 'MarkdownV2', // Enable Markdown for username mention
+        parse_mode: 'HTML', // Enable Markdown for username mention
       },
     );
     setTimeout(async () => {
@@ -118,7 +118,7 @@ export class BotService {
       `@${msg.from.username}, you have not registered\\. Use /wallet <address> to link your account to your wallet\\.`,
       {
         reply_to_message_id: msg.message_id,
-        parse_mode: 'MarkdownV2', // Enable Markdown for username mention
+        parse_mode: 'HTML', // Enable Markdown for username mention
       },
     );
     setTimeout(async () => {
@@ -137,7 +137,7 @@ export class BotService {
       msg.chat.id,
       `Pool Address (MOG on Base): ${poolAddress}\n\nPool Balance: ${poolBalance} MOG`,
       {
-        parse_mode: 'MarkdownV2',
+        parse_mode: 'HTML',
       },
     );
   }
@@ -164,7 +164,7 @@ export class BotService {
             'Invalid wallet address. ENS resolution failed.',
             {
               reply_to_message_id: msg.message_id,
-              parse_mode: 'MarkdownV2',
+              parse_mode: 'HTML',
             },
           );
           return;
@@ -175,7 +175,7 @@ export class BotService {
           'Invalid wallet address. Please provide a valid Ethereum address or ENS name\\.',
           {
             reply_to_message_id: msg.message_id,
-            parse_mode: 'MarkdownV2',
+            parse_mode: 'HTML',
           },
         );
         return;
@@ -197,7 +197,7 @@ export class BotService {
         `Wallet address set to: ${addressToUpsert}`,
         {
           reply_to_message_id: msg.message_id,
-          parse_mode: 'MarkdownV2',
+          parse_mode: 'HTML',
         },
       );
     } else {
@@ -206,7 +206,7 @@ export class BotService {
         'Please provide a wallet address. Usage: /wallet <address>',
         {
           reply_to_message_id: msg.message_id,
-          parse_mode: 'MarkdownV2',
+          parse_mode: 'HTML',
         },
       );
     }
@@ -224,6 +224,7 @@ export class BotService {
       console.log('Kyc already');
       await this.bot.sendMessage(msg.chat.id, 'You are already verified\\.', {
         reply_to_message_id: msg.message_id,
+        parse_mode: 'HTML',
       });
       return;
     }
@@ -242,6 +243,7 @@ export class BotService {
     });
     await this.bot.sendMessage(msg.chat.id, challenge.challengeLink, {
       reply_to_message_id: msg.message_id,
+      parse_mode: 'HTML',
     });
   }
 
@@ -263,7 +265,7 @@ export class BotService {
       {
         reply_to_message_id: msg.message_id,
         caption: `We got a winner\\! 😹😹😹\\n\\nTransaction: https://basescan.org/tx/${hash}\\.`,
-        parse_mode: 'Markdown',
+        parse_mode: 'HTML',
       },
     );
     console.log(`${msg.from.first_name} spinned ${msg.dice.value} and won.`);
@@ -277,6 +279,7 @@ export class BotService {
     if (!leaderboard.length) {
       await this.bot.sendMessage(msg.chat.id, 'Nobody wants to be rich\\?', {
         reply_to_message_id: msg.message_id,
+        parse_mode: 'HTML',
       });
       return;
     }
@@ -295,6 +298,7 @@ export class BotService {
 
     await this.bot.sendMessage(msg.chat.id, leaderboardMessage, {
       reply_to_message_id: msg.message_id,
+      parse_mode: 'HTML',
     });
   }
 
