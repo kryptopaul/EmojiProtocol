@@ -118,7 +118,7 @@ export class BotService {
       `@${msg.from.username}, you have not registered\\. Use /wallet <address> to link your account to your wallet\\.`,
       {
         reply_to_message_id: msg.message_id,
-        parse_mode: 'HTML', // Enable Markdown for username mention
+        parse_mode: 'Markdown', // Enable Markdown for username mention
       },
     );
     setTimeout(async () => {
