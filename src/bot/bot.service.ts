@@ -96,7 +96,7 @@ export class BotService {
   async handleTimeout(msg: TelegramBot.Message) {
     const registerMessage = await this.bot.sendMessage(
       msg.chat.id,
-      `@${msg.from.username}, calm down, you can only spin once per minute.`,
+      `@${msg.from.username}, calm down, you can only spin once per minute\\.`, // Escaped the period character
       {
         reply_to_message_id: msg.message_id,
         parse_mode: 'MarkdownV2', // Enable Markdown for username mention
