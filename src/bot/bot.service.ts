@@ -69,13 +69,13 @@ export class BotService {
         return;
       }
 
-      // if (!user.lastSpinTime) {
-      // } else if (user.lastSpinTime > new Date(new Date().getTime() - 60000)) {
-      //   console.log(user.lastSpinTime);
-      //   console.log(new Date(new Date().getTime() - 6000));
-      //   await this.handleTimeout(msg);
-      //   return;
-      // }
+      if (!user.lastSpinTime) {
+      } else if (user.lastSpinTime > new Date(new Date().getTime() - 60000)) {
+        console.log(user.lastSpinTime);
+        console.log(new Date(new Date().getTime() - 6000));
+        await this.handleTimeout(msg);
+        return;
+      }
       await prisma.telegramUser.update({
         where: {
           id: msg.from.id.toString(),
@@ -102,14 +102,14 @@ export class BotService {
         parse_mode: 'Markdown', // Enable Markdown for username mention
       },
     );
-    // setTimeout(async () => {
-    //   await this.bot.deleteMessage(
-    //     registerMessage.chat.id,
-    //     registerMessage.message_id,
-    //   );
-    // }, 5000);
+    setTimeout(async () => {
+      await this.bot.deleteMessage(
+        registerMessage.chat.id,
+        registerMessage.message_id,
+      );
+    }, 5000);
 
-    // await this.bot.deleteMessage(msg.chat.id, msg.message_id);
+    await this.bot.deleteMessage(msg.chat.id, msg.message_id);
   }
 
   async handleNoWalletRegistered(msg: TelegramBot.Message) {
@@ -121,14 +121,14 @@ export class BotService {
         parse_mode: 'Markdown', // Enable Markdown for username mention
       },
     );
-    // setTimeout(async () => {
-    //   await this.bot.deleteMessage(
-    //     registerMessage.chat.id,
-    //     registerMessage.message_id,
-    //   );
-    // }, 5000);
+    setTimeout(async () => {
+      await this.bot.deleteMessage(
+        registerMessage.chat.id,
+        registerMessage.message_id,
+      );
+    }, 5000);
 
-    // await this.bot.deleteMessage(msg.chat.id, msg.message_id);
+    await this.bot.deleteMessage(msg.chat.id, msg.message_id);
   }
   async handlePool(msg: TelegramBot.Message) {
     const poolAddress = this.blockchainService.l2Contract;
