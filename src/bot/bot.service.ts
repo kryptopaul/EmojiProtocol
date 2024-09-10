@@ -70,9 +70,9 @@ export class BotService {
       }
 
       if (!user.lastSpinTime) {
-      } else if (user.lastSpinTime > new Date(new Date().getTime() - 10000)) { // Changed from 60000 to 10000
+      } else if (user.lastSpinTime > new Date(new Date().getTime() - 60000)) {
         console.log(user.lastSpinTime);
-        console.log(new Date(new Date().getTime() - 10000)); // Changed from 6000 to 10000
+        console.log(new Date(new Date().getTime() - 6000));
         await this.handleTimeout(msg);
         return;
       }
