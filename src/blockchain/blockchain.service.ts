@@ -18,7 +18,7 @@ export class BlockchainService {
     this.configService.getOrThrow<`0x${string}`>('PRIVATE_KEY'),
   );
   public l2Contract: `0x${string}` =
-    '0x7777777e1ba5d032604b0b4c1303c41246264ab5'; // change
+    '0x7777777A541B7E7533F3776A42792baB4CA933B6'; // change
   private mog: `0x${string}` = '0x2da56acb9ea78330f947bd57c54119debda7af71';
   private ethClient = createPublicClient({
     chain: mainnet,
