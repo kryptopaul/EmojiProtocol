@@ -1,0 +1,192 @@
+# flyctl launch added from .gitignore
+**/.env
+# compiled output
+dist
+node_modules
+
+# Logs
+**/logs
+**/*.log
+**/npm-debug.log*
+**/pnpm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/lerna-debug.log*
+
+# OS
+**/.DS_Store
+
+# Tests
+coverage
+.nyc_output
+
+# IDEs and editors
+.idea
+**/.project
+**/.classpath
+**/.c9
+**/*.launch
+**/.settings
+**/*.sublime-workspace
+
+# IDE - VSCode
+**/.vscode/*
+!**/.vscode/settings.json
+!**/.vscode/tasks.json
+!**/.vscode/launch.json
+!**/.vscode/extensions.json
+
+# flyctl launch added from contracts/.gitignore
+# Compiler files
+contracts/**/cache
+contracts/**/out
+
+# Ignores development broadcast logs
+!contracts/broadcast
+contracts/broadcast/*/31337
+contracts/broadcast/**/dry-run
+
+# Docs
+contracts/**/docs
+
+# Dotenv file
+contracts/**/.env
+
+# flyctl launch added from contracts/lib/openzeppelin-contracts/.gitignore
+contracts/lib/openzeppelin-contracts/**/*.swp
+contracts/lib/openzeppelin-contracts/**/*.swo
+
+# Logs
+contracts/lib/openzeppelin-contracts/**/logs
+contracts/lib/openzeppelin-contracts/**/*.log
+
+# Runtime data
+contracts/lib/openzeppelin-contracts/**/pids
+contracts/lib/openzeppelin-contracts/**/*.pid
+contracts/lib/openzeppelin-contracts/**/*.seed
+contracts/lib/openzeppelin-contracts/**/allFiredEvents
+contracts/lib/openzeppelin-contracts/**/scTopics
+
+# Coverage directory used by tools like istanbul
+contracts/lib/openzeppelin-contracts/**/coverage
+contracts/lib/openzeppelin-contracts/**/coverage.json
+contracts/lib/openzeppelin-contracts/**/coverageEnv
+
+# node-waf configuration
+contracts/lib/openzeppelin-contracts/**/.lock-wscript
+
+# Dependency directory
+contracts/lib/openzeppelin-contracts/**/node_modules
+
+# Debug log from npm
+contracts/lib/openzeppelin-contracts/**/npm-debug.log
+
+# local env variables
+contracts/lib/openzeppelin-contracts/**/.env
+
+# truffle build directory
+contracts/lib/openzeppelin-contracts/**/build
+
+# macOS
+contracts/lib/openzeppelin-contracts/**/.DS_Store
+
+# truffle
+contracts/lib/openzeppelin-contracts/**/.node-xmlhttprequest-*
+
+# IntelliJ IDE
+contracts/lib/openzeppelin-contracts/**/.idea
+
+# docs artifacts
+contracts/lib/openzeppelin-contracts/**/docs/modules/api
+
+# only used to package @openzeppelin/contracts
+contracts/lib/openzeppelin-contracts/**/contracts/build
+contracts/lib/openzeppelin-contracts/**/contracts/README.md
+
+# temporary artifact from solidity-coverage
+contracts/lib/openzeppelin-contracts/**/allFiredEvents
+contracts/lib/openzeppelin-contracts/**/.coverage_artifacts
+contracts/lib/openzeppelin-contracts/**/.coverage_cache
+contracts/lib/openzeppelin-contracts/**/.coverage_contracts
+
+# hardat-exposed
+contracts/lib/openzeppelin-contracts/**/contracts-exposed
+
+# Hardhat
+contracts/lib/openzeppelin-contracts/cache
+contracts/lib/openzeppelin-contracts/artifacts
+
+# Foundry
+contracts/lib/openzeppelin-contracts/out
+contracts/lib/openzeppelin-contracts/cache_forge
+
+# Certora
+contracts/lib/openzeppelin-contracts/**/.certora*
+contracts/lib/openzeppelin-contracts/**/.last_confs
+contracts/lib/openzeppelin-contracts/**/certora_*
+contracts/lib/openzeppelin-contracts/**/.zip-output-url.txt
+
+# flyctl launch added from contracts/lib/openzeppelin-contracts/certora/.gitignore
+contracts/lib/openzeppelin-contracts/certora/**/patched
+
+# flyctl launch added from contracts/lib/openzeppelin-contracts/lib/forge-std/.gitignore
+contracts/lib/openzeppelin-contracts/lib/forge-std/**/cache
+contracts/lib/openzeppelin-contracts/lib/forge-std/**/out
+contracts/lib/openzeppelin-contracts/lib/forge-std/**/.vscode
+contracts/lib/openzeppelin-contracts/lib/forge-std/**/.idea
+
+# flyctl launch added from contracts/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/.gitignore
+contracts/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/.dapple
+contracts/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/build
+contracts/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/out
+
+# flyctl launch added from contracts/lib/solady/.gitignore
+# NodeJS files
+contracts/lib/solady/**/node_modules
+contracts/lib/solady/**/coverage
+contracts/lib/solady/**/coverage.json
+contracts/lib/solady/**/typechain
+
+# Hardhat files
+contracts/lib/solady/**/cache
+contracts/lib/solady/**/artifacts
+
+contracts/lib/solady/**/cache
+contracts/lib/solady/**/out
+
+# Ignore Environment Variables!
+contracts/lib/solady/**/.env
+contracts/lib/solady/**/.env.prod
+
+# Ignore all vscode settings
+contracts/lib/solady/**/.vscode
+
+# Ignore all jetbrain settings
+contracts/lib/solady/**/.idea
+
+# Ignore all notes 
+contracts/lib/solady/**/notes
+
+# Ignore flattened files
+contracts/lib/solady/**/flattened.txt
+
+contracts/lib/solady/**/broadcast
+
+# Coverage
+contracts/lib/solady/**/lcov.info
+
+# Woke testing
+contracts/lib/solady/**/.wake
+contracts/lib/solady/**/pytypes
+contracts/lib/solady/**/__pycache__
+contracts/lib/solady/**/*.py[cod]
+contracts/lib/solady/**/.hypothesis
+contracts/lib/solady/**/wake-coverage.cov
+
+# flyctl launch added from contracts/lib/v3-periphery/.gitignore
+contracts/lib/v3-periphery/**/artifacts
+contracts/lib/v3-periphery/**/cache
+contracts/lib/v3-periphery/**/crytic-export
+contracts/lib/v3-periphery/**/node_modules
+contracts/lib/v3-periphery/**/typechain
+fly.toml
