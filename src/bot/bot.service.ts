@@ -70,9 +70,10 @@ export class BotService {
       }
 
       if (!user.lastSpinTime) {
-      } else if (user.lastSpinTime > new Date(new Date().getTime() - 60000)) {
+      } else if (user.lastSpinTime > new Date(new Date().getTime() - 10000)) {
+        // Changed from 60000 to 10000
         console.log(user.lastSpinTime);
-        console.log(new Date(new Date().getTime() - 6000));
+        console.log(new Date(new Date().getTime() - 10000)); // Changed from 6000 to 10000
         await this.handleTimeout(msg);
         return;
       }
@@ -96,7 +97,7 @@ export class BotService {
   async handleTimeout(msg: TelegramBot.Message) {
     const registerMessage = await this.bot.sendMessage(
       msg.chat.id,
-      `@${msg.from.username}, calm down, you can only spin once per minute\\.`, // Escaped the period character
+      `@${msg.from.username}, calm down, you can only spin once per 10 seconds\\.`, // Escaped the period character
       {
         reply_to_message_id: msg.message_id,
         parse_mode: 'HTML', // Enable Markdown for username mention
